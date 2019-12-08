@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/usernameEditTxt"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:background="#FFFFFF"
@@ -24,56 +24,55 @@
         app:layout_constraintVertical_bias="0.475" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/passwordEditTxt"
         android:layout_width="200dp"
         android:layout_height="40dp"
+        android:layout_marginTop="28dp"
         android:background="#FFFFFF"
         android:ems="10"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.687"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.584" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameEditTxt" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:text="Username"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/usernameEditTxt"
         app:layout_constraintHorizontal_bias="0.127"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.477" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/masukBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Masuk"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.792"
+        app:layout_constraintHorizontal_bias="0.783"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.74" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditTxt" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="45dp"
         android:text="Password"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.132"
+        app:layout_constraintEnd_toStartOf="@+id/passwordEditTxt"
+        app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.58" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -88,15 +87,15 @@
         app:srcCompat="@drawable/logo" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="216dp"
         android:layout_height="48dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.641"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.907">
+        app:layout_constraintTop_toBottomOf="@+id/masukBtn">
 
         <TextView
             android:id="@+id/textView4"
@@ -113,7 +112,7 @@
             app:layout_constraintVertical_bias="0.982" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/daftarTxt"
             android:layout_width="70dp"
             android:layout_height="31dp"
             android:paddingLeft="5dp"

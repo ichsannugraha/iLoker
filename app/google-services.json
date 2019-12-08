@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "822274018620",
+    "firebase_url": "https://iloker.firebaseio.com",
+    "project_id": "iloker",
+    "storage_bucket": "iloker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822274018620:android:6a49e896125570438e2239",
+        "android_client_info": {
+          "package_name": "com.example.iloker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822274018620-lba7rvgaprsbkvim2r4c0q7rmbnpdbhb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.iloker",
+            "certificate_hash": "3ef6768b2f668bd85034a0b9d93f3569823e27a3"
+          }
+        },
+        {
+          "client_id": "822274018620-b6fa56cbn0837i3a85r2d4goefdsd8av.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcc9UOa7DGi3zxMfceLCtmNRDgaEBlDaQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822274018620-b6fa56cbn0837i3a85r2d4goefdsd8av.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
