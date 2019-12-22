@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText mUsernameTxt;
     private EditText mPasswordTxt;
     private Button mMasukBtn;
-    private TextView mTextViewDaftar;
+    private TextView mDaftarTxtView;
+
     private FirebaseAuth mFireBaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
@@ -44,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         mUsernameTxt = findViewById(R.id.usernameEditTxt);
         mPasswordTxt = findViewById(R.id.passwordEditTxt);
         mMasukBtn = findViewById(R.id.masukBtn);
-        mTextViewDaftar = findViewById(R.id.daftarTxt);
+        mDaftarTxtView = findViewById(R.id.daftarTxt);
+
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mTextViewDaftar.setOnClickListener(new View.OnClickListener(){
+        mDaftarTxtView.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View view){
                 Intent daftarIntent = new Intent(MainActivity.this,DaftarActivity.class);

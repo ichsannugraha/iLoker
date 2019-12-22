@@ -15,10 +15,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
-    Button logoutBtn;
+    private Button logoutBtn;
 
-    FirebaseAuth mFireBaseAuth;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
+    //private FirebaseAuth mFireBaseAuth;
+    //private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -19,20 +19,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DaftarActivity extends AppCompatActivity {
     private EditText mNamaTxt;
-    private EditText mEmailTxt;
     private EditText mPasswordTxt;
+    private EditText mEmailTxt;
     private EditText mTanggalLahirTxt;
     private EditText mTempatLahirTxt;
     private EditText mAlamatTxt;
     private Button mDaftarBtn;
-    private TextView mTextViewLogin;
+    private TextView mLoginTxtView;
+
     private FirebaseAuth mFireBaseAuth;
+    private FirebaseFirestore db;
 
 
     @Override
@@ -41,6 +48,9 @@ public class DaftarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_daftar);
         roundLogo();
 
+        mFireBaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         mNamaTxt = findViewById(R.id.editText3);
         mPasswordTxt = findViewById(R.id.editText4);
         mEmailTxt = findViewById(R.id.editText5);
@@ -48,17 +58,18 @@ public class DaftarActivity extends AppCompatActivity {
         mTempatLahirTxt = findViewById(R.id.editText7);
         mAlamatTxt = findViewById(R.id.editText8);
         mDaftarBtn = findViewById(R.id.button2);
-        mFireBaseAuth = FirebaseAuth.getInstance();
+        mLoginTxtView = findViewById(R.id.textView12);
+
 
         mDaftarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = mEmailTxt.getText().toString().trim();
-                String password = mPasswordTxt.getText().toString().trim();
-                String nama = mNamaTxt.getText().toString();
-                String tglLahir = mTanggalLahirTxt.getText().toString();
-                String tmptLahir = mTempatLahirTxt.getText().toString();
-                String alamat = mAlamatTxt.getText().toString();
+                final String nama = mNamaTxt.getText().toString();
+                final String password = mPasswordTxt.getText().toString();
+                final String email = mEmailTxt.getText().toString();
+                final String tglLahir = mTanggalLahirTxt.getText().toString();
+                final String tmptLahir = mTempatLahirTxt.getText().toString();
+                final String alamat = mAlamatTxt.getText().toString();
 
                 if(email.isEmpty() && password.isEmpty()){
                     Toast.makeText(DaftarActivity.this, "Email dan Password Tidak Boleh Kosong!",Toast.LENGTH_SHORT).show();
@@ -76,6 +87,7 @@ public class DaftarActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
+                                addUser(nama,password,email,tglLahir,tmptLahir,alamat);
                                 startActivity(new Intent(DaftarActivity.this, HomeActivity.class));
                             }
                             else {
@@ -90,8 +102,7 @@ public class DaftarActivity extends AppCompatActivity {
             }
         });
 
-        mTextViewLogin = (TextView) findViewById(R.id.textView12);
-        mTextViewLogin.setOnClickListener(new View.OnClickListener(){
+        mLoginTxtView.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View view){
                 Intent loginIntent = new Intent(DaftarActivity.this,MainActivity.class);
@@ -113,5 +124,30 @@ public class DaftarActivity extends AppCompatActivity {
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         roundedBitmapDrawable.setCircular(true);
         imageView.setImageDrawable(roundedBitmapDrawable);
+    }
+
+    public void addUser(String nama, String password, String email, String tglLahir, String tmptLahir, String alamat) {
+        CollectionReference dbUsers = db.collection("users");
+
+        User user = new User(
+                nama,
+                password,
+                email,
+                tglLahir,
+                tmptLahir,
+                alamat
+        );
+
+        dbUsers.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(DaftarActivity.this, "User Berhasil Ditambahkan!",Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(DaftarActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
