@@ -31,7 +31,10 @@ public class HomeActivity extends AppCompatActivity {
         logoutBtn = findViewById(R.id.logoutBtn);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.setSelectedItemId(R.id.nav_home);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+
         //setFragment(homeFragment);
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
