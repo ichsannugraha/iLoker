@@ -3,6 +3,7 @@ package com.example.iloker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class HomeActivity extends AppCompatActivity {
     private Button logoutBtn;
 
+    //private HomeFragment homeFragment;
+
     //private FirebaseAuth mFireBaseAuth;
     //private FirebaseAuth.AuthStateListener mAuthStateListener;
 
@@ -25,12 +28,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        logoutBtn = findViewById(R.id.logoutBtn);
+
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-
-        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
-
-        logoutBtn = findViewById(R.id.logoutBtn);
+        //setFragment(homeFragment);
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,4 +72,9 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    private void setFragment (Fragment fragment){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
+    }
 }
