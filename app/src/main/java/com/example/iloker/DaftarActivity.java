@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,48 +24,52 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class DaftarActivity extends AppCompatActivity {
-    FirebaseAuth mFireBaseAuth;
-    EditText mTextNama;
-    EditText emailTxt;
-    EditText passwordTxt;
-    EditText mTextTanggalLahir;
-    EditText mTextTempatLahir;
-    EditText mTextAlamat;
+    private EditText mNamaTxt;
+    private EditText mEmailTxt;
+    private EditText mPasswordTxt;
+    private EditText mTanggalLahirTxt;
+    private EditText mTempatLahirTxt;
+    private EditText mAlamatTxt;
+    private Button mDaftarBtn;
+    private TextView mTextViewLogin;
+    private FirebaseAuth mFireBaseAuth;
 
-    Button daftarBtn;
-    TextView mTextViewLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daftar);
+        roundLogo();
 
+        mNamaTxt = findViewById(R.id.editText3);
+        mPasswordTxt = findViewById(R.id.editText4);
+        mEmailTxt = findViewById(R.id.editText5);
+        mTanggalLahirTxt = findViewById(R.id.editText6);
+        mTempatLahirTxt = findViewById(R.id.editText7);
+        mAlamatTxt = findViewById(R.id.editText8);
+        mDaftarBtn = findViewById(R.id.button2);
         mFireBaseAuth = FirebaseAuth.getInstance();
 
-        mTextNama = findViewById(R.id.editText3);
-        passwordTxt = findViewById(R.id.editText4);
-        emailTxt = findViewById(R.id.editText5);
-        mTextTanggalLahir = findViewById(R.id.editText6);
-        mTextTempatLahir = findViewById(R.id.editText7);
-        mTextAlamat = findViewById(R.id.editText8);
-
-        daftarBtn = findViewById(R.id.button2);
-        daftarBtn.setOnClickListener(new View.OnClickListener() {
+        mDaftarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailTxt.getText().toString().trim();
-                String password = passwordTxt.getText().toString().trim();
+                String email = mEmailTxt.getText().toString().trim();
+                String password = mPasswordTxt.getText().toString().trim();
+                String nama = mNamaTxt.getText().toString();
+                String tglLahir = mTanggalLahirTxt.getText().toString();
+                String tmptLahir = mTempatLahirTxt.getText().toString();
+                String alamat = mAlamatTxt.getText().toString();
 
                 if(email.isEmpty() && password.isEmpty()){
                     Toast.makeText(DaftarActivity.this, "Email dan Password Tidak Boleh Kosong!",Toast.LENGTH_SHORT).show();
                 }
                 else if(password.isEmpty()){
-                    passwordTxt.setError("Masukkan Email Anda!");
-                    passwordTxt.requestFocus();
+                    mPasswordTxt.setError("Masukkan Email Anda!");
+                    mPasswordTxt.requestFocus();
                 }
                 else if(email.isEmpty()){
-                    emailTxt.setError("Masukkan Email Anda!");
-                    emailTxt.requestFocus();
+                    mEmailTxt.setError("Masukkan Email Anda!");
+                    mEmailTxt.requestFocus();
                 }
                 else if(!(email.isEmpty() && password.isEmpty())){
                     mFireBaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(DaftarActivity.this, new OnCompleteListener<AuthResult>() {
@@ -92,7 +98,15 @@ public class DaftarActivity extends AppCompatActivity {
                 startActivity(loginIntent);
             }
         });
+    }
 
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+    }
+
+    public void roundLogo(){
+        //membuat gambar logo iLoker menjadi lingkaran
         ImageView imageView = (ImageView) findViewById(R.id.imageView2);
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);

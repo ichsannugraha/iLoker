@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,23 +26,24 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-    EditText usernameTxt;
-    EditText passwordTxt;
-    Button mButtonMasuk;
-    TextView mTextViewDaftar;
-    FirebaseAuth mFireBaseAuth;
+    private EditText mUsernameTxt;
+    private EditText mPasswordTxt;
+    private Button mMasukBtn;
+    private TextView mTextViewDaftar;
+    private FirebaseAuth mFireBaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        roundLogo();
 
         mFireBaseAuth = FirebaseAuth.getInstance();
 
-        usernameTxt = findViewById(R.id.usernameEditTxt);
-        passwordTxt = findViewById(R.id.passwordEditTxt);
-        mButtonMasuk = findViewById(R.id.masukBtn);
+        mUsernameTxt = findViewById(R.id.usernameEditTxt);
+        mPasswordTxt = findViewById(R.id.passwordEditTxt);
+        mMasukBtn = findViewById(R.id.masukBtn);
         mTextViewDaftar = findViewById(R.id.daftarTxt);
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -52,28 +56,28 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(homeIntent);
                 }
                 else{
-                    Toast.makeText(MainActivity.this,"Silahkan Login!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this,"Selamat Datang",Toast.LENGTH_SHORT).show();
                 }
 
             }
         };
 
-        mButtonMasuk.setOnClickListener(new View.OnClickListener() {
+        mMasukBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = usernameTxt.getText().toString().trim();
-                String password = passwordTxt.getText().toString().trim();
+                String email = mUsernameTxt.getText().toString().trim();
+                String password = mPasswordTxt.getText().toString().trim();
 
                 if(email.isEmpty() && password.isEmpty()){
                     Toast.makeText(MainActivity.this, "Email dan Password Tidak Boleh Kosong!",Toast.LENGTH_SHORT).show();
                 }
                 else if(password.isEmpty()){
-                    passwordTxt.setError("Masukkan Email Anda!");
-                    passwordTxt.requestFocus();
+                    mPasswordTxt.setError("Masukkan Email Anda!");
+                    mPasswordTxt.requestFocus();
                 }
                 else if(email.isEmpty()){
-                    usernameTxt.setError("Masukkan Email Anda!");
-                    usernameTxt.requestFocus();
+                    mUsernameTxt.setError("Masukkan Email Anda!");
+                    mUsernameTxt.requestFocus();
                 }
                 else if(!(email.isEmpty() && password.isEmpty())){
                     mFireBaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
@@ -102,21 +106,26 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(daftarIntent);
             }
         });
-
-
-
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        imageView.setImageDrawable(roundedBitmapDrawable);
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mFireBaseAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+    }
+
+    public void roundLogo(){
+        //membuat gambar logo iLoker menjadi lingkaran
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        imageView.setImageDrawable(roundedBitmapDrawable);
     }
 }

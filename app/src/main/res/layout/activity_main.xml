@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:onClick="hideKeyboard">
 
     <EditText
         android:id="@+id/usernameEditTxt"
@@ -88,8 +89,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="216dp"
-        android:layout_height="48dp"
+        android:layout_width="170dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +114,7 @@
 
         <TextView
             android:id="@+id/daftarTxt"
-            android:layout_width="70dp"
+            android:layout_width="wrap_content"
             android:layout_height="31dp"
             android:paddingLeft="5dp"
             android:text="Daftar"

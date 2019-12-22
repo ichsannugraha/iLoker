@@ -11,19 +11,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Logout"
-        android:layout_centerInParent="true"/>
+        android:layout_above="@id/bottom_nav"
+        android:layout_centerHorizontal="true"/>
+
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_nav"/>
+        android:layout_above="@id/bottom_nav" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="52dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/login"
+        app:itemIconSize="28dp"
         app:menu="@menu/bottom_nav" />
 
 </RelativeLayout>
