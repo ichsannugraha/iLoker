@@ -29,18 +29,16 @@ public class HomeFragment extends Fragment {
         //return inflater.inflate(R.layout.fragment_home, container, false);
         RelativeLayout rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_home, container, false);
 
-
         sliderLayout = rootView.findViewById(R.id.imageSlider);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL);
         sliderLayout.setScrollTimeInSec(2);
 
         setSliderViews();
         return rootView;
-
     }
 
     private void setSliderViews(){
-        for (int i = 0; i <= 3; i++){
+        for (int i = 0; i <= 4; i++){
             DefaultSliderView sliderView = new DefaultSliderView(getActivity());
 
             switch (i) {

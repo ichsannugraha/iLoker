@@ -16,7 +16,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
-    private Button logoutBtn;
+    //private Button logoutBtn;
 
     //private HomeFragment homeFragment;
 
@@ -28,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        logoutBtn = findViewById(R.id.logoutBtn);
+        //logoutBtn = findViewById(R.id.logoutBtn);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setSelectedItemId(R.id.nav_home);
@@ -37,15 +37,15 @@ public class HomeActivity extends AppCompatActivity {
 
         //setFragment(homeFragment);
 
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
+        //logoutBtn.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        FirebaseAuth.getInstance().signOut();
 
-                Intent loginIntent = new Intent(HomeActivity.this,MainActivity.class);
-                startActivity(loginIntent);
-            }
-        });
+        //        Intent loginIntent = new Intent(HomeActivity.this,MainActivity.class);
+        //        startActivity(loginIntent);
+        //    }
+        //});
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -28,7 +29,11 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DaftarActivity extends AppCompatActivity {
+    public static final String TAG = "TAG";
     private EditText mNamaTxt;
     private EditText mPasswordTxt;
     private EditText mEmailTxt;
@@ -37,9 +42,10 @@ public class DaftarActivity extends AppCompatActivity {
     private EditText mAlamatTxt;
     private Button mDaftarBtn;
     private TextView mLoginTxtView;
+    private String userID;
 
-    private FirebaseAuth mFireBaseAuth;
-    private FirebaseFirestore db;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseFirestore mFirestore;
 
 
     @Override
@@ -48,8 +54,8 @@ public class DaftarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_daftar);
         roundLogo();
 
-        mFireBaseAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
 
         mNamaTxt = findViewById(R.id.editText3);
         mPasswordTxt = findViewById(R.id.editText4);
@@ -83,11 +89,30 @@ public class DaftarActivity extends AppCompatActivity {
                     mEmailTxt.requestFocus();
                 }
                 else if(!(email.isEmpty() && password.isEmpty())){
-                    mFireBaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(DaftarActivity.this, new OnCompleteListener<AuthResult>() {
+                    mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(DaftarActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                addUser(nama,password,email,tglLahir,tmptLahir,alamat);
+                                //addUser(nama,password,email,tglLahir,tmptLahir,alamat);
+                                userID = mFirebaseAuth.getCurrentUser().getUid();
+                                DocumentReference documentReference = mFirestore.collection("users").document(userID);
+                                Map<String,Object> user = new HashMap<>();
+                                user.put("nama", nama);
+                                user.put("email", email);
+                                user.put("tglLahir", tglLahir);
+                                user.put("tmptLahir",tmptLahir);
+                                user.put("alamat", alamat);
+                                documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "onSuccess: user Profile is created for "+ userID);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d(TAG, "onFailure: "+ e.toString());
+                                    }
+                                });
                                 startActivity(new Intent(DaftarActivity.this, HomeActivity.class));
                             }
                             else {
@@ -127,7 +152,8 @@ public class DaftarActivity extends AppCompatActivity {
     }
 
     public void addUser(String nama, String password, String email, String tglLahir, String tmptLahir, String alamat) {
-        CollectionReference dbUsers = db.collection("users");
+        userID = mFirebaseAuth.getCurrentUser().getUid();
+        CollectionReference dbUsers = mFirestore.collection("users");
 
         User user = new User(
                 nama,
