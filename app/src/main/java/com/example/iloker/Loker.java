@@ -3,13 +3,13 @@ package com.example.iloker;
 public class Loker {
     public String namaLoker;
     public String deskripsiLoker;
-    public String idUploader;
+    public String idUser;
     public String imageUrl;
 
-    public Loker(String namaLoker, String deskripsiLoker, String idUploader, String imageUrl) {
+    public Loker(String namaLoker, String deskripsiLoker, String idUser, String imageUrl) {
         this.namaLoker = namaLoker;
         this.deskripsiLoker = deskripsiLoker;
-        this.idUploader = idUploader;
+        this.idUser = idUser;
         this.imageUrl = imageUrl;
     }
 
@@ -29,12 +29,12 @@ public class Loker {
         this.deskripsiLoker = deskripsiLoker;
     }
 
-    public String getIdUploader() {
-        return idUploader;
+    public String getIdUser() {
+        return idUser;
     }
 
-    public void setIdUploader(String idUploader) {
-        this.idUploader = idUploader;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
     public String getImageUrl() {

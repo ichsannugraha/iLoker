@@ -6,14 +6,18 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +33,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,11 +42,12 @@ public class DaftarActivity extends AppCompatActivity {
     private EditText mNamaTxt;
     private EditText mPasswordTxt;
     private EditText mEmailTxt;
-    private EditText mTanggalLahirTxt;
+    private TextView mTanggalLahirTxt;
     private EditText mTempatLahirTxt;
     private EditText mAlamatTxt;
     private Button mDaftarBtn;
     private TextView mLoginTxtView;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
     private String userID;
 
     private FirebaseAuth mFirebaseAuth;
@@ -60,12 +66,41 @@ public class DaftarActivity extends AppCompatActivity {
         mNamaTxt = findViewById(R.id.editText3);
         mPasswordTxt = findViewById(R.id.editText4);
         mEmailTxt = findViewById(R.id.editText5);
-        mTanggalLahirTxt = findViewById(R.id.editText6);
+        mTanggalLahirTxt = findViewById(R.id.textView17);
         mTempatLahirTxt = findViewById(R.id.editText7);
         mAlamatTxt = findViewById(R.id.editText8);
         mDaftarBtn = findViewById(R.id.button2);
         mLoginTxtView = findViewById(R.id.textView12);
 
+
+        mTanggalLahirTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int tahun = cal.get(Calendar.YEAR);
+                int bulan = cal.get(Calendar.MONTH);
+                int hari = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        DaftarActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog,
+                        mDateSetListener,
+                        tahun, bulan, hari);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month+1;
+                Log.d(TAG, "onDateSet: date:"+ dayOfMonth + "/" + month + "/" + year);
+
+                String date = dayOfMonth + "/" + month + "/" + year;
+                mTanggalLahirTxt.setText(date);
+            }
+        };
 
         mDaftarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +132,7 @@ public class DaftarActivity extends AppCompatActivity {
                                 userID = mFirebaseAuth.getCurrentUser().getUid();
                                 DocumentReference documentReference = mFirestore.collection("users").document(userID);
                                 Map<String,Object> user = new HashMap<>();
+                                user.put("idUser", userID);
                                 user.put("nama", nama);
                                 user.put("email", email);
                                 user.put("tglLahir", tglLahir);
