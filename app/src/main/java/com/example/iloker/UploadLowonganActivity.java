@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -116,28 +117,41 @@ public class UploadLowonganActivity extends AppCompatActivity {
 
         if (FilepathUri != null) {
 
-            progressDialog.setTitle("Image is Uploading...");
+            progressDialog.setTitle("Sedang mengupload Loker...");
             progressDialog.show();
             StorageReference storageReference2 = storageReference.child(System.currentTimeMillis() + "." + GetFileExtension(FilepathUri));
             storageReference2.putFile(FilepathUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
+                            /*
                             String namaLoker = mNamaLokerTxt.getText().toString().trim();
                             String deskripsiLoker = mDeskripsiLokerTxt.getText().toString();
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
                             @SuppressWarnings("VisibleForTests")
-                            Loker loker = new Loker(namaLoker, deskripsiLoker, userID, taskSnapshot.getUploadSessionUri().toString());
+                            Loker loker = new Loker(namaLoker, deskripsiLoker, userID, taskSnapshot.);
                             String ImageUploadId = databaseReference.push().getKey();
                             databaseReference.child(ImageUploadId).setValue(loker);
+                            */
+
+                            Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                            while (!urlTask.isSuccessful());
+                            Uri downloadUrl = urlTask.getResult();
+                            String namaLoker = mNamaLokerTxt.getText().toString().trim();
+                            String deskripsiLoker = mDeskripsiLokerTxt.getText().toString();
+                            progressDialog.dismiss();
+                            Toast.makeText(UploadLowonganActivity.this, "Loker berhasil diupload!", Toast.LENGTH_SHORT).show();
+
+                            Loker loker = new Loker(namaLoker, deskripsiLoker, userID, downloadUrl.toString());
+                            String imageUploadId = databaseReference.push().getKey();
+                            databaseReference.child(imageUploadId).setValue(loker);
                         }
                     });
         }
         else {
 
-            Toast.makeText(UploadLowonganActivity.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
+            Toast.makeText(UploadLowonganActivity.this, "Harap masukkan gambar terlebih dahulu", Toast.LENGTH_LONG).show();
 
         }
     }
