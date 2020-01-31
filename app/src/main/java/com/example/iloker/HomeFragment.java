@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +36,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     ArrayList<Loker> list;
     MyAdapter adapter;
+    SearchView searchView;
 
     @Nullable
     @Override
@@ -49,6 +51,7 @@ public class HomeFragment extends Fragment {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.myRecycler);
         recyclerView.setLayoutManager( new LinearLayoutManager(getActivity()));
+        searchView = (SearchView) rootView.findViewById(R.id.searchView);
         list = new ArrayList<Loker>();
 
         reference = FirebaseDatabase.getInstance().getReference().child("loker");
@@ -69,8 +72,34 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    search(newText);
+                    return true;
+                }
+            });
+        }
         return rootView;
     }
+
+    private void search(String str){
+        ArrayList<Loker> lokerList = new ArrayList<>();
+        for (Loker object : list) {
+            if (object.getNamaLoker().toLowerCase().contains(str.toLowerCase())) {
+                lokerList.add(object);
+            }
+        }
+        MyAdapter myAdapter = new MyAdapter(getContext(), lokerList);
+        recyclerView.setAdapter(myAdapter);
+    }
+
 
     private void setSliderViews(){
         for (int i = 0; i <= 4; i++){
