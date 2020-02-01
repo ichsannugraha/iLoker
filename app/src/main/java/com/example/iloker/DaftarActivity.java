@@ -112,53 +112,60 @@ public class DaftarActivity extends AppCompatActivity {
                 final String tmptLahir = mTempatLahirTxt.getText().toString();
                 final String alamat = mAlamatTxt.getText().toString();
 
-                if(email.isEmpty() && password.isEmpty()){
-                    Toast.makeText(DaftarActivity.this, "Email dan Password Tidak Boleh Kosong!",Toast.LENGTH_SHORT).show();
-                }
-                else if(password.isEmpty()){
+                if(email.isEmpty() && password.isEmpty() && nama.isEmpty() && tglLahir.isEmpty() && tmptLahir.isEmpty() && alamat.isEmpty()){
+                    Toast.makeText(DaftarActivity.this, "Data tidak boleh kosong!",Toast.LENGTH_SHORT).show();
+                } else if (nama.isEmpty()) {
+                    mNamaTxt.setError("Masukkan Nama Anda!");
+                    mNamaTxt.requestFocus();
+                } else if (password.isEmpty()) {
                     mPasswordTxt.setError("Masukkan Email Anda!");
                     mPasswordTxt.requestFocus();
-                }
-                else if(email.isEmpty()){
+                } else if (email.isEmpty()) {
                     mEmailTxt.setError("Masukkan Email Anda!");
                     mEmailTxt.requestFocus();
-                }
-                else if(!(email.isEmpty() && password.isEmpty())){
+                } else if (tglLahir.isEmpty()) {
+                    mTanggalLahirTxt.setError("Masukkan Email Anda!");
+                    mTanggalLahirTxt.requestFocus();
+                } else if (tmptLahir.isEmpty()) {
+                    mTempatLahirTxt.setError("Masukkan Email Anda!");
+                    mTempatLahirTxt.requestFocus();
+                } else if (alamat.isEmpty()) {
+                    mAlamatTxt.setError("Masukkan Email Anda!");
+                    mAlamatTxt.requestFocus();
+                } else if (!(email.isEmpty() && password.isEmpty() && nama.isEmpty() && tglLahir.isEmpty() && tmptLahir.isEmpty() && alamat.isEmpty())) {
                     mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(DaftarActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 //addUser(nama,password,email,tglLahir,tmptLahir,alamat);
                                 userID = mFirebaseAuth.getCurrentUser().getUid();
                                 DocumentReference documentReference = mFirestore.collection("users").document(userID);
-                                Map<String,Object> user = new HashMap<>();
+                                Map<String, Object> user = new HashMap<>();
                                 user.put("idUser", userID);
                                 user.put("nama", nama);
                                 user.put("email", email);
                                 user.put("tglLahir", tglLahir);
-                                user.put("tmptLahir",tmptLahir);
+                                user.put("tmptLahir", tmptLahir);
                                 user.put("alamat", alamat);
                                 documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "onSuccess: user Profile is created for "+ userID);
+                                        Log.d(TAG, "onSuccess: user Profile is created for " + userID);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Log.d(TAG, "onFailure: "+ e.toString());
+                                        Log.d(TAG, "onFailure: " + e.toString());
                                     }
                                 });
                                 startActivity(new Intent(DaftarActivity.this, HomeActivity.class));
-                            }
-                            else {
-                                Toast.makeText(DaftarActivity.this, "Gagal Melakukan Pendaftaran!",Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(DaftarActivity.this, "Gagal Melakukan Pendaftaran!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
-                }
-                else{
-                    Toast.makeText(DaftarActivity.this, "Terjadi Kesalahan, Silahkan Coba Kembali!",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DaftarActivity.this, "Terjadi Kesalahan, Silahkan Coba Kembali!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -143,7 +143,7 @@ public class UploadLowonganActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             Toast.makeText(UploadLowonganActivity.this, "Loker berhasil diupload!", Toast.LENGTH_SHORT).show();
 
-                            Loker loker = new Loker(namaLoker, deskripsiLoker, userID, downloadUrl.toString());
+                            Loker loker = new Loker(namaLoker, deskripsiLoker, downloadUrl.toString(), userID);
                             String imageUploadId = databaseReference.push().getKey();
                             databaseReference.child(imageUploadId).setValue(loker);
                         }

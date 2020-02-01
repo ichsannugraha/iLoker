@@ -43,6 +43,8 @@ public class ProfileFragment extends Fragment {
         //return inflater.inflate(R.layout.fragment_profile, container, false);
         //ConstraintLayout rootView = (ConstraintLayout) inflater.inflate(R.layout.fragment_profile, container, false);
         View rootView = inflater.inflate(R.layout.fragment_profile,container,false);
+        roundLogo(rootView);
+
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
 
@@ -54,30 +56,24 @@ public class ProfileFragment extends Fragment {
         final TextView alamatProfilTxt = rootView.findViewById(R.id.alamatProfilTxt);
         final TextView emailProfilTxt = rootView.findViewById(R.id.emailProfilTxt);
 
-        ImageButton uploadLoker = rootView.findViewById(R.id.uploadLokerBtn);
+        Button uploadLoker = rootView.findViewById(R.id.uploadLokerBtn);
 
 
         final DocumentReference documentReference = mFirestore.collection("users").document(userID);
         documentReference.addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                String namaTxt = namaProfilTxt.getText().toString();
-                String tglLahirTxt = tglLahirProfilTxt.getText().toString();
-                String tmptLahirTxt = tmptLahirProfilTxt.getText().toString();
-                String alamatTxt = alamatProfilTxt.getText().toString();
-                String emailTxt = emailProfilTxt.getText().toString();
-
                 String namaProfil = documentSnapshot.getString("nama");
                 String tglLahirProfil = documentSnapshot.getString("tglLahir");
                 String tmptLahirProfil = documentSnapshot.getString("tmptLahir");
                 String alamatProfil = documentSnapshot.getString("alamat");
                 String emailProfil = documentSnapshot.getString("email");
 
-                namaProfilTxt.setText(namaTxt + namaProfil);
-                tglLahirProfilTxt.setText(tglLahirTxt + tglLahirProfil);
-                tmptLahirProfilTxt.setText(tmptLahirTxt + tmptLahirProfil);
-                alamatProfilTxt.setText(alamatTxt + alamatProfil);
-                emailProfilTxt.setText(emailTxt + emailProfil);
+                namaProfilTxt.setText(namaProfil);
+                tglLahirProfilTxt.setText(tglLahirProfil);
+                tmptLahirProfilTxt.setText(tmptLahirProfil);
+                alamatProfilTxt.setText(alamatProfil);
+                emailProfilTxt.setText(emailProfil);
             }
         });
 
@@ -90,5 +86,15 @@ public class ProfileFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    public void roundLogo(View view){
+        //membuat gambar logo iLoker menjadi lingkaran
+        ImageView imageView = (ImageView) view.findViewById(R.id.mainProfilePicture);
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.blank_profile_picture);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        imageView.setImageDrawable(roundedBitmapDrawable);
     }
 }

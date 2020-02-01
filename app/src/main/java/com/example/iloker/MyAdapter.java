@@ -35,7 +35,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.namaLoker.setText(lokers.get(position).getNamaLoker());
         holder.deskripsiLoker.setText(lokers.get(position).getDeskripsiLoker());
-        if (lokers.get(position).getImageUrl() != null){
+        if (lokers.get(position).getImageUrl() != null) {
             Picasso.get().load(lokers.get(position).getImageUrl()).into(holder.previewLoker);
         }
     }
