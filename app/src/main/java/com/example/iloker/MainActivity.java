@@ -53,12 +53,12 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser mFireBaseUser = mFireBaseAuth.getCurrentUser();
                 if(mFireBaseUser != null){
-                    Toast.makeText(MainActivity.this,"Anda Berhasil Login!",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this,"Anda Berhasil Login!",Toast.LENGTH_SHORT).show();
                     Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(homeIntent);
                 }
                 else{
-                    Toast.makeText(MainActivity.this,"Selamat Datang",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this,"Selamat Datang",Toast.LENGTH_SHORT).show();
                 }
 
             }

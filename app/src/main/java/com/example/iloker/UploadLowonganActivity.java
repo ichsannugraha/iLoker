@@ -77,7 +77,23 @@ public class UploadLowonganActivity extends AppCompatActivity {
         mUploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UploadLoker();
+                String namaLoker = mNamaLokerTxt.getText().toString();
+                String deskripsiLoker = mDeskripsiLokerTxt.getText().toString();
+
+                if (namaLoker.isEmpty() && deskripsiLoker.isEmpty()) {
+                    Toast.makeText(UploadLowonganActivity.this, "Data tidak boleh kosong!",Toast.LENGTH_SHORT).show();
+                }
+                else if (namaLoker.isEmpty()){
+                    mNamaLokerTxt.setError("Masukkan Nama Loker!");
+                    mNamaLokerTxt.requestFocus();
+                }
+                else if (deskripsiLoker.isEmpty()) {
+                    mDeskripsiLokerTxt.setError("Masukkan Deskripsi Loker!");
+                    mDeskripsiLokerTxt.requestFocus();
+                }
+                else if (!(namaLoker.isEmpty() && deskripsiLoker.isEmpty())) {
+                    UploadLoker();
+                }
             }
         });
     }
@@ -150,9 +166,7 @@ public class UploadLowonganActivity extends AppCompatActivity {
                     });
         }
         else {
-
             Toast.makeText(UploadLowonganActivity.this, "Harap masukkan gambar terlebih dahulu", Toast.LENGTH_LONG).show();
-
         }
     }
 }

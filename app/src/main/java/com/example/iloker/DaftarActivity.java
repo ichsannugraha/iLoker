@@ -118,19 +118,19 @@ public class DaftarActivity extends AppCompatActivity {
                     mNamaTxt.setError("Masukkan Nama Anda!");
                     mNamaTxt.requestFocus();
                 } else if (password.isEmpty()) {
-                    mPasswordTxt.setError("Masukkan Email Anda!");
+                    mPasswordTxt.setError("Masukkan Password Anda!");
                     mPasswordTxt.requestFocus();
                 } else if (email.isEmpty()) {
                     mEmailTxt.setError("Masukkan Email Anda!");
                     mEmailTxt.requestFocus();
                 } else if (tglLahir.isEmpty()) {
-                    mTanggalLahirTxt.setError("Masukkan Email Anda!");
+                    mTanggalLahirTxt.setError("Masukkan Tanggal Lahir Anda!");
                     mTanggalLahirTxt.requestFocus();
                 } else if (tmptLahir.isEmpty()) {
-                    mTempatLahirTxt.setError("Masukkan Email Anda!");
+                    mTempatLahirTxt.setError("Masukkan Tempat Lahir Anda!");
                     mTempatLahirTxt.requestFocus();
                 } else if (alamat.isEmpty()) {
-                    mAlamatTxt.setError("Masukkan Email Anda!");
+                    mAlamatTxt.setError("Masukkan Alamat Anda!");
                     mAlamatTxt.requestFocus();
                 } else if (!(email.isEmpty() && password.isEmpty() && nama.isEmpty() && tglLahir.isEmpty() && tmptLahir.isEmpty() && alamat.isEmpty())) {
                     mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(DaftarActivity.this, new OnCompleteListener<AuthResult>() {
