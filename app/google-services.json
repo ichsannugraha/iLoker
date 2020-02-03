@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:822274018620:android:6a49e896125570438e2239",
         "android_client_info": {
-          "package_name": "com.example.iloker"
+          "package_name": "com.tubesrpl.iloker"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "822274018620-lba7rvgaprsbkvim2r4c0q7rmbnpdbhb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.iloker",
+            "package_name": "com.tubesrpl.iloker",
             "certificate_hash": "3ef6768b2f668bd85034a0b9d93f3569823e27a3"
           }
         },

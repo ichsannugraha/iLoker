@@ -8,6 +8,7 @@
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:padding="10dp">

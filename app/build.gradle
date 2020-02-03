@@ -5,7 +5,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.example.iloker"
+        applicationId "com.tubesrpl.iloker"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
